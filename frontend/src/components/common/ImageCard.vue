@@ -11,7 +11,11 @@
       <div class="flex flex-wrap gap-2">
         <span v-for="tag in image.tags" :key="tag" class="bg-ink/5 px-2 py-1 text-xs text-ink/70">{{ tag }}</span>
       </div>
-      <button class="w-full bg-ink px-4 py-2 text-sm font-semibold text-paper transition hover:bg-clay" @click="$emit('collect', image)">收藏到灵感板</button>
+      <button
+        class="w-full px-4 py-2 text-sm font-semibold text-paper transition"
+        :class="boardName ? 'bg-moss hover:bg-ink' : 'bg-ink hover:bg-clay'"
+        @click="$emit('collect', image)"
+      >{{ boardName ? `已收藏到「${boardName}」· 点击改选` : '收藏到灵感板' }}</button>
     </div>
   </article>
 </template>
@@ -21,7 +25,7 @@ import { ref } from 'vue';
 import { InspirationImage } from '../../types';
 import StyleTag from './StyleTag.vue';
 
-defineProps<{ image: InspirationImage }>();
+defineProps<{ image: InspirationImage; boardName?: string }>();
 defineEmits<{ collect: [image: InspirationImage] }>();
 const failed = ref(false);
 </script>

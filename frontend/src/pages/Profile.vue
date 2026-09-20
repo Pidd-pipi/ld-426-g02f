@@ -13,7 +13,8 @@
       <StyleRadarChart :scores="profile.profile.scores" />
     </div>
     <EmptyState v-else text="完成一次风格测试后，这里会出现你的长期偏好档案" />
-    <div class="grid gap-4 lg:grid-cols-3">
+    <EmptyState v-if="!boards.boards.length" text="还没有灵感板，去灵感图集收藏第一张图片时会引导你创建" />
+    <div v-else class="grid gap-4 lg:grid-cols-3">
       <MoodBoardCard v-for="board in boards.boards" :key="board.id" :board="board" />
     </div>
   </section>
