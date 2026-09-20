@@ -11,7 +11,8 @@
       <div class="flex flex-wrap gap-2">
         <span v-for="tag in image.tags" :key="tag" class="bg-ink/5 px-2 py-1 text-xs text-ink/70">{{ tag }}</span>
       </div>
-      <button class="w-full bg-ink px-4 py-2 text-sm font-semibold text-paper transition hover:bg-clay" @click="$emit('collect', image)">收藏到灵感板</button>
+      <button v-if="mode === 'collect'" class="w-full bg-ink px-4 py-2 text-sm font-semibold text-paper transition hover:bg-clay" @click.stop="$emit('collect', image)">收藏到灵感板</button>
+      <button v-else class="w-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink transition hover:border-clay hover:text-clay" @click.stop="$emit('remove', image)">移出灵感板</button>
     </div>
   </article>
 </template>
@@ -21,7 +22,7 @@ import { ref } from 'vue';
 import { InspirationImage } from '../../types';
 import StyleTag from './StyleTag.vue';
 
-defineProps<{ image: InspirationImage }>();
-defineEmits<{ collect: [image: InspirationImage] }>();
+withDefaults(defineProps<{ image: InspirationImage; mode?: 'collect' | 'board' }>(), { mode: 'collect' });
+defineEmits<{ collect: [image: InspirationImage]; remove: [image: InspirationImage] }>();
 const failed = ref(false);
 </script>

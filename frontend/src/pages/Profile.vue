@@ -14,13 +14,14 @@
     </div>
     <EmptyState v-else text="完成一次风格测试后，这里会出现你的长期偏好档案" />
     <div class="grid gap-4 lg:grid-cols-3">
-      <MoodBoardCard v-for="board in boards.boards" :key="board.id" :board="board" />
+      <MoodBoardCard v-for="board in boards.boards" :key="board.id" :board="board" @open="router.push('/moodboards')" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import EmptyState from '../components/common/EmptyState.vue';
 import MoodBoardCard from '../components/common/MoodBoardCard.vue';
 import StyleRadarChart from '../components/common/StyleRadarChart.vue';
@@ -30,6 +31,7 @@ import { useProfileStore } from '../stores/profileStore';
 
 const profile = useProfileStore();
 const boards = useMoodboardStore();
+const router = useRouter();
 
 onMounted(async () => {
   await profile.loadProfile();

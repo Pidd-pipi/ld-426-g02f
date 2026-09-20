@@ -15,8 +15,7 @@ export const useInspirationStore = defineStore('inspiration', {
       if ((await db.images.count()) === 0) await db.images.bulkPut(mockInspiration);
       this.images = await db.images.toArray();
     },
-    async collect(image: InspirationImage) {
-      await db.images.put({ ...image, collectedAt: new Date().toISOString() });
+    async refresh() {
       this.images = await db.images.toArray();
     }
   }
